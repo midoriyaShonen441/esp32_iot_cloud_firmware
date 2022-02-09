@@ -89,7 +89,7 @@ void Controller_handle(void* pvParameters) {
   TickType_t PreviousWakeTime = xTaskGetTickCount();
   for (;;) // A Task shall never return or exit.
   {
-    xTaskDelayUntil(&PreviousWakeTime, 100);
+    vTaskDelayUntil(&PreviousWakeTime, 100);
 
     digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
     vTaskDelay(1000);  // one tick delay (15ms) in between reads for stability
@@ -130,4 +130,3 @@ void Controller_handle(void* pvParameters) {
     vTaskDelay(1000);
   }
 }
-

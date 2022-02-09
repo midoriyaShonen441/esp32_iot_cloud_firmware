@@ -92,7 +92,7 @@ void Modbus_handle(void* pvParameters) {
 
     for (;;)
     {
-        xTaskDelayUntil(&PreviousWakeTime, 5000);
+        vTaskDelayUntil(&PreviousWakeTime, 5000);
         master.query(telegram[0]);
         vTaskDelay(100);
 
@@ -152,7 +152,7 @@ void MCP23017_handle(void* pvParameters) {
     TickType_t PreviousWakeTime = xTaskGetTickCount();
     for (;;)
     {
-        xTaskDelayUntil(&PreviousWakeTime, 100);
+        vTaskDelayUntil(&PreviousWakeTime, 100);
 
         Wire.beginTransmission(MCP23017_ADDR);
         Wire.write(0x13); // IODIRB register
@@ -184,7 +184,7 @@ void PCA9685_handle(void* pvParameters) {
     TickType_t PreviousWakeTime = xTaskGetTickCount();
     for (;;)
     {
-        xTaskDelayUntil(&PreviousWakeTime, 100);
+        vTaskDelayUntil(&PreviousWakeTime, 100);
         for (int i = 0; i < 16; i++)
         {
             LED_Power[i] = constrain(LED_Power[i], 0, 100);
@@ -204,7 +204,7 @@ void MQTT_handle(void* pvParameters) {
     TickType_t PreviousWakeTime = xTaskGetTickCount();
     for (;;)
     {
-        xTaskDelayUntil(&PreviousWakeTime, 1000);
+        vTaskDelayUntil(&PreviousWakeTime, 1000);
 
         xSemaphoreTake(espClient_xMutex, portMAX_DELAY);
         if (WiFi.status() != WL_CONNECTED) {
@@ -226,7 +226,7 @@ void WDT_handle(void* pvParameters) {
     for (;;) // A Task shall never return or exit.
     {
 
-        xTaskDelayUntil(&PreviousWakeTime, 1000);
+        vTaskDelayUntil(&PreviousWakeTime, 1000);
 
         wdt_status = 0xff;
         if (wdt_status == 0xff) {
@@ -358,7 +358,7 @@ void HTTP_handle(void* pvParameters) {
             setup_wifi();
         }
         xSemaphoreGive(espClient_xMutex);
-        xTaskDelayUntil(&PreviousWakeTime, 60000);
+        vTaskDelayUntil(&PreviousWakeTime, 60000);
     }
 }
 
@@ -448,4 +448,3 @@ void reconnect() {
         }
     }
 }
-
